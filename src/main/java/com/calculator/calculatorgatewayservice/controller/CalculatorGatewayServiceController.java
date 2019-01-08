@@ -5,6 +5,7 @@ import com.calculator.calculatorgatewayservice.enums.CalculatorOperationsENUM;
 import com.calculator.calculatorgatewayservice.exceptions.APIBaseException;
 import com.calculator.calculatorgatewayservice.model.request.CalculationRequest;
 import com.calculator.calculatorgatewayservice.model.response.APIResponse;
+import com.calculator.calculatorgatewayservice.model.response.CalculationResultResponse;
 import com.calculator.calculatorgatewayservice.service.*;
 import io.lettuce.core.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,7 +8,9 @@ import java.math.BigDecimal;
 /**
  * Created by akashdeepnew on 20/12/18.
  */
-public class CalculationRequest{
+public class CalculationRequest implements Serializable{
+    private static final long serialVersionUID = 7156526077883281623L;
+
     private Double firstNumber;
     private Double secondNumber;
     private CalculatorOperationsENUM operation;
@@ -25,6 +27,18 @@ public class CalculationRequest{
     public CalculationRequest(Double firstNumber, Double secondNumber) {
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
+    }
+
+    public void setFirstNumber(Double firstNumber) {
+        this.firstNumber = firstNumber;
+    }
+
+    public void setSecondNumber(Double secondNumber) {
+        this.secondNumber = secondNumber;
+    }
+
+    public void setOperation(CalculatorOperationsENUM operation) {
+        this.operation = operation;
     }
 
     public Double getFirstNumber() {

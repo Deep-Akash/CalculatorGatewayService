@@ -20,7 +20,7 @@ public class CalculatorGatewayService {
     @Autowired
     private OperationServiceLocatorFactory operationServiceLocatorFactory;
 
-    @Cacheable(value="calculation", key="#request.firstNumber")
+    @Cacheable("calculation")
     public CalculationResultResponse calculate(CalculationRequest request) throws WrongOperationException {
         return calculate(request.getFirstNumber(),request.getSecondNumber(),request.getOperation());
     }
