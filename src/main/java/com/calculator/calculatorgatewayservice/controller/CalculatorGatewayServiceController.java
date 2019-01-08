@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
  * Created by akashdeepnew on 20/12/18.
  */
 @RestController
-@RefreshScope
 @RequestMapping(value = "/calculator")
 public class CalculatorGatewayServiceController {
 

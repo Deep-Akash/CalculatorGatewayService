@@ -35,7 +35,6 @@ public class CalculatorGatewayService {
         return new CalculationResultResponse(resultResponse.getResult());
     }
 
-    @Cacheable(value="cost", sync = true)
     public Double getCost(CalculatorOperationsENUM operationsENUM) throws WrongOperationException {
         OperationServiceInterface operationService = getOperationService(operationsENUM);
         if (null == operationService) {
