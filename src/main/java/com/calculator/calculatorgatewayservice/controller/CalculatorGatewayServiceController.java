@@ -3,6 +3,7 @@ package com.calculator.calculatorgatewayservice.controller;
 import com.calculator.calculatorgatewayservice.enums.APIResponseCodeENUM;
 import com.calculator.calculatorgatewayservice.enums.CalculatorOperationsENUM;
 import com.calculator.calculatorgatewayservice.exceptions.APIBaseException;
+import com.calculator.calculatorgatewayservice.kafka.NotificationProducer;
 import com.calculator.calculatorgatewayservice.model.request.CalculationRequest;
 import com.calculator.calculatorgatewayservice.model.response.APIResponse;
 import com.calculator.calculatorgatewayservice.model.response.CalculationResultResponse;
@@ -26,6 +27,8 @@ public class CalculatorGatewayServiceController {
     @Autowired
     private CalculatorGatewayService calculatorGatewayService;
 
+    @Autowired
+    private NotificationProducer notificationProducer;
 
     @PostMapping("/calculate")
     @ResponseBody
@@ -37,7 +40,8 @@ public class CalculatorGatewayServiceController {
     @PostMapping("/balance")
     @ResponseBody
     public APIResponse checkBalance() throws Exception {
-        calculatorGatewayService.getCost(CalculatorOperationsENUM.ADD);
+        notificationProducer.send("testtopic","payload payload payload");
+        //calculatorGatewayService.getCost(CalculatorOperationsENUM.ADD);
         return APIResponse.buildSuccess("DONE");
     }
 
