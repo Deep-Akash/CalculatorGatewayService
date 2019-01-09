@@ -8,6 +8,8 @@ import com.calculator.calculatorgatewayservice.model.request.CalculationRequest;
 import com.calculator.calculatorgatewayservice.model.response.APIResponse;
 import com.calculator.calculatorgatewayservice.model.response.CalculationResultResponse;
 import com.calculator.calculatorgatewayservice.service.*;
+import com.calculator.calculatorgatewayservice.user.service.UserService;
+import com.calculator.calculatorgatewayservice.user.service.model.UserCreditRequest;
 import io.lettuce.core.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,7 +30,7 @@ public class CalculatorGatewayServiceController {
     private CalculatorGatewayService calculatorGatewayService;
 
     @Autowired
-    private NotificationProducer notificationProducer;
+    private UserService userService;
 
     @PostMapping("/calculate")
     @ResponseBody
@@ -37,13 +39,27 @@ public class CalculatorGatewayServiceController {
         return APIResponse.buildSuccess(calculatorGatewayService.calculate(calculationRequest));
     }
 
-    @PostMapping("/balance")
+    @GetMapping("/user/balance")
     @ResponseBody
-    public APIResponse checkBalance() throws Exception {
-        notificationProducer.send("testtopic","payload payload payload");
-        //calculatorGatewayService.getCost(CalculatorOperationsENUM.ADD);
-        return APIResponse.buildSuccess("DONE");
+    public APIResponse checkBalance(@RequestParam("email") String email) throws Exception {
+        return APIResponse.buildSuccess(userService.getUser(email).getCreditBalance());
     }
+
+
+    @GetMapping("/user")
+    @ResponseBody
+    public APIResponse fetchUser(@RequestParam("email") String email) throws Exception {
+        return APIResponse.buildSuccess(userService.getUser(email));
+    }
+
+
+    @PostMapping("/topup")
+    @ResponseBody
+    public APIResponse toupUser(@RequestBody UserCreditRequest userCreditRequest) throws Exception {
+        userService.topUpUser(userCreditRequest);
+        return APIResponse.buildSuccess("SUCCESS");
+    }
+
 
 
 
@@ -51,6 +67,9 @@ public class CalculatorGatewayServiceController {
     @ResponseBody
     public APIResponse handleException(Exception ex) {
         if (ex instanceof APIBaseException){
+            if (null==((APIBaseException) ex).getApiResponseCodeENUM()){
+                return APIResponse.buildFailure(((APIBaseException) ex).code,((APIBaseException) ex).message);
+            }
             return APIResponse.buildFailure(((APIBaseException) ex).getApiResponseCodeENUM());
         }
         return APIResponse.buildFailure(APIResponseCodeENUM.GENERAL_FAILURE);

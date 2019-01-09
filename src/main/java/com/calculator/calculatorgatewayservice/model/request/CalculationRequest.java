@@ -14,6 +14,7 @@ public class CalculationRequest implements Serializable{
     private Double firstNumber;
     private Double secondNumber;
     private CalculatorOperationsENUM operation;
+    private String userEmail;
 
     public CalculationRequest() {
     }
@@ -22,6 +23,13 @@ public class CalculationRequest implements Serializable{
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
         this.operation = operation;
+    }
+
+    public CalculationRequest(Double firstNumber, Double secondNumber, CalculatorOperationsENUM operation, String userEmail) {
+        this.firstNumber = firstNumber;
+        this.secondNumber = secondNumber;
+        this.operation = operation;
+        this.userEmail = userEmail;
     }
 
     public CalculationRequest(Double firstNumber, Double secondNumber) {
@@ -53,12 +61,17 @@ public class CalculationRequest implements Serializable{
         return operation;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
     @Override
     public String toString() {
         return "CalculationRequest{" +
                 "firstNumber=" + firstNumber +
                 ", secondNumber=" + secondNumber +
-                ", operation='" + operation + '\'' +
+                ", operation=" + operation +
+                ", userEmail='" + userEmail + '\'' +
                 '}';
     }
 }

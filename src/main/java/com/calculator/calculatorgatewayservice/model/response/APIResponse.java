@@ -58,11 +58,11 @@ public class APIResponse {
     }
 
     public static APIResponse buildFailure(String code, String message) {
-        return new APIResponse(true,code,message,null);
+        return new APIResponse(false,code,message,null);
     }
 
     public static APIResponse buildFailure(APIResponseCodeENUM responseCodeENUM) {
-        return new APIResponse(true,responseCodeENUM.getCode(),responseCodeENUM.getMessage(),null);
+        return new APIResponse(false,responseCodeENUM.getCode(),responseCodeENUM.getMessage(),null);
     }
 
     @Override

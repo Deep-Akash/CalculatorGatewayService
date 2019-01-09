@@ -42,6 +42,15 @@ public class PropertyProviderService {
     private String mulServiceCostURL;
 
 
+    @Value("${user.service.debit.url:http://localhost:8094/user/debit}")
+    private String userServiceDebitURL;
+
+    @Value("${user.service.credit.url:http://localhost:8094/user/credit}")
+    private String userServiceCreditURL;
+
+    @Value("${user.service.fetch.url:http://localhost:8094/user/get?email=}")
+    private String userServiceFetchURL;
+
 
 
     public String getAddServiceCalculationURL() {
@@ -74,5 +83,17 @@ public class PropertyProviderService {
 
     public String getMulServiceCostURL() {
         return mulServiceCostURL;
+    }
+
+    public String getUserServiceDebitURL() {
+        return userServiceDebitURL;
+    }
+
+    public String getUserServiceCreditURL() {
+        return userServiceCreditURL;
+    }
+
+    public String getUserServiceFetchURL() {
+        return userServiceFetchURL;
     }
 }
