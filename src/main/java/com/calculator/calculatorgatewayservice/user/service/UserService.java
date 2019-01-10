@@ -1,6 +1,7 @@
 package com.calculator.calculatorgatewayservice.user.service;
 
 import com.calculator.calculatorgatewayservice.exceptions.APIBaseException;
+import com.calculator.calculatorgatewayservice.kafka.NotificationProducer;
 import com.calculator.calculatorgatewayservice.model.response.APIResponse;
 import com.calculator.calculatorgatewayservice.service.PropertyProviderService;
 import com.calculator.calculatorgatewayservice.user.service.model.User;
@@ -17,6 +18,9 @@ public class UserService {
     private PropertyProviderService propertyProviderService;
 
     @Autowired
+    private NotificationProducer notificationProducer;
+
+    @Autowired
     private CalculatorConnectionService calculatorConnectionService;
 
     public void topUpUser(UserCreditRequest userCreditRequest) throws APIBaseException {
@@ -24,6 +28,7 @@ public class UserService {
         if (!response.getSuccess()){
             throw new APIBaseException(response.getCode(),response.getMessage());
         }
+        notificationProducer.send("testtopic","Top Up is Complete");
     }
 
     public void debitUser(UserDebitRequest userDebitRequest) throws APIBaseException {

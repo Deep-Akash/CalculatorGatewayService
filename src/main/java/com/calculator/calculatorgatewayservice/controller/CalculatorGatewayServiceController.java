@@ -30,12 +30,16 @@ public class CalculatorGatewayServiceController {
     private CalculatorGatewayService calculatorGatewayService;
 
     @Autowired
+    private DebitService debitService;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/calculate")
     @ResponseBody
     public APIResponse calculate(@RequestBody CalculationRequest calculationRequest) throws Exception {
         validateService.validateServiceRequest(calculationRequest);
+        debitService.debitUserCredits(calculationRequest.getUserEmail(),calculationRequest.getOperation());
         return APIResponse.buildSuccess(calculatorGatewayService.calculate(calculationRequest));
     }
 

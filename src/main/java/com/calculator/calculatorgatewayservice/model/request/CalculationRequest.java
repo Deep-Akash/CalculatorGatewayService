@@ -3,7 +3,6 @@ package com.calculator.calculatorgatewayservice.model.request;
 import com.calculator.calculatorgatewayservice.enums.CalculatorOperationsENUM;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * Created by akashdeepnew on 20/12/18.

@@ -3,6 +3,7 @@ package com.calculator.calculatorgatewayservice.service;
 import com.calculator.calculatorgatewayservice.enums.CalculatorOperationsENUM;
 import com.calculator.calculatorgatewayservice.exceptions.APIBaseException;
 import com.calculator.calculatorgatewayservice.exceptions.WrongOperationException;
+import com.calculator.calculatorgatewayservice.kafka.NotificationProducer;
 import com.calculator.calculatorgatewayservice.model.request.CalculationRequest;
 import com.calculator.calculatorgatewayservice.model.response.CalculationResultResponse;
 import com.calculator.calculatorgatewayservice.model.response.OperationResultResponse;
@@ -26,18 +27,15 @@ public class CalculatorGatewayService {
     @Autowired
     private UserService userService;
 
-    public CalculationResultResponse calculate(CalculationRequest request) throws APIBaseException {
-        debitUserCredits(request.getUserEmail(),request.getOperation(),getCost(request.getOperation()));
-        return cachedCalculate(request);
-    }
+    @Autowired
+    private NotificationProducer notificationProducer;
+
+
+
 
     @Cacheable(value = "calculation")
     public CalculationResultResponse cachedCalculate(CalculationRequest request) throws APIBaseException {
         return calculate(request.getFirstNumber(),request.getSecondNumber(),request.getOperation());
-    }
-
-    private void debitUserCredits(String userEmailId, CalculatorOperationsENUM operation,Double cost) throws APIBaseException {
-        userService.debitUser(new UserDebitRequest(userEmailId,operation,cost));
     }
 
     private CalculationResultResponse calculate(Double firstNumber, Double secondNumber, CalculatorOperationsENUM operationsENUM) throws WrongOperationException {
@@ -47,9 +45,14 @@ public class CalculatorGatewayService {
         }
 
         OperationResultResponse resultResponse = operationService.calculate(firstNumber, secondNumber);
+        notificationProducer.send("testtopic","Calculation is Complete");
         return new CalculationResultResponse(resultResponse.getResult());
     }
 
+
+
+
+    @Cacheable(value = "operationcost", key = "#operationsENUM.name()")
     public Double getCost(CalculatorOperationsENUM operationsENUM) throws WrongOperationException {
         OperationServiceInterface operationService = getOperationService(operationsENUM);
         if (null == operationService) {
