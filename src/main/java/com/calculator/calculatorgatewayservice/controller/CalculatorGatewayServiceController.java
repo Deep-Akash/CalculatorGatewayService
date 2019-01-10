@@ -40,7 +40,7 @@ public class CalculatorGatewayServiceController {
     public APIResponse calculate(@RequestBody CalculationRequest calculationRequest) throws Exception {
         validateService.validateServiceRequest(calculationRequest);
         debitService.debitUserCredits(calculationRequest.getUserEmail(),calculationRequest.getOperation());
-        return APIResponse.buildSuccess(calculatorGatewayService.calculate(calculationRequest));
+        return APIResponse.buildSuccess(calculatorGatewayService.cachedCalculate(calculationRequest));
     }
 
     @GetMapping("/user/balance")

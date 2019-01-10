@@ -19,26 +19,26 @@ public class PropertyProviderService {
     private String addServiceCostURL;
 
 
-    @Value("${operation.calculation.service.sub.url:http://localhost:8080/subtract/calculate}")
+    @Value("${operation.calculation.service.sub.url:http://localhost:8091/subtract/calculate}")
     private String subServiceCalculationURL;
 
-    @Value("${operation.cost.service.sub.url:http://localhost:8080/subtract/cost}")
+    @Value("${operation.cost.service.sub.url:http://localhost:8091/subtract/cost}")
     private String subServiceCostURL;
 
 
 
-    @Value("${operation.calculation.service.div.url:http://localhost:8080/divide/calculate}")
+    @Value("${operation.calculation.service.div.url:http://localhost:8092/divide/calculate}")
     private String divServiceCalculationURL;
 
-    @Value("${operation.cost.service.div.url:http://localhost:8080/div/cost}")
+    @Value("${operation.cost.service.div.url:http://localhost:8092/div/cost}")
     private String divServiceCostURL;
 
 
 
-    @Value("${operation.calculation.service.mul.url:http://localhost:8080/multiply/calculate}")
+    @Value("${operation.calculation.service.mul.url:http://localhost:8093/multiply/calculate}")
     private String mulServiceCalculationURL;
 
-    @Value("${operation.cost.service.mul.url:http://localhost:8080/mul/cost}")
+    @Value("${operation.cost.service.mul.url:http://localhost:8093/mul/cost}")
     private String mulServiceCostURL;
 
 
